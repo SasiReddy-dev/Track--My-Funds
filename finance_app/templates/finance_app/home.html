@@ -1,0 +1,113 @@
+{% extends "finance_app/base.html" %}
+
+{% block content %}
+
+<!-- Expense Chart Button -->
+<a href="{% url 'expense_chart' %}" class="btn btn-primary mb-3">
+  View Expense Chart
+</a>
+
+<!-- Summary Cards -->
+<div class="row mb-4">
+  <div class="col-md-4">
+    <div class="card text-bg-success mb-3">
+      <div class="card-header">Total Income</div>
+      <div class="card-body">
+        <h5 class="card-title">₹{{ total_income }}</h5>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card text-bg-danger mb-3">
+      <div class="card-header">Total Expense</div>
+      <div class="card-body">
+        <h5 class="card-title">₹{{ total_expense }}</h5>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card text-bg-info mb-3">
+      <div class="card-header">Balance</div>
+      <div class="card-body">
+        <h5 class="card-title">₹{{ balance }}</h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Buttons -->
+<div class="mb-3">
+  <a href="{% url 'add_income' %}" class="btn btn-success me-2">
+    + Add Income
+  </a>
+  <a href="{% url 'add_expense' %}" class="btn btn-danger">
+    + Add Expense
+  </a>
+</div>
+
+<hr>
+
+<!-- Income & Expense Sections -->
+<div class="row">
+
+  <!-- Income Section -->
+  <div class="col-md-6">
+    <h4>Incomes</h4>
+    <ul class="list-group">
+      {% for income in incomes %}
+        <li class="list-group-item">
+          {{ income.date }} - 
+          <strong>{{ income.source }}</strong>: 
+          ₹{{ income.amount }}
+        </li>
+      {% empty %}
+        <li class="list-group-item">
+          No income records yet.
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- Expense Section -->
+  <div class="col-md-6">
+    <h4>Expenses</h4>
+    <ul class="list-group">
+      {% for expense in expenses %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+
+          <!-- Expense Info -->
+          <div>
+            {{ expense.date }} - 
+            <strong>{{ expense.title }}</strong> 
+            ({{ expense.category }}): 
+            ₹{{ expense.amount }}
+          </div>
+
+          <!-- Buttons -->
+          <div>
+            <a href="{% url 'edit_expense' expense.id %}" 
+               class="btn btn-sm btn-primary me-2">
+               Edit
+            </a>
+
+            <a href="{% url 'delete_expense' expense.id %}" 
+               class="btn btn-sm btn-danger"
+               onclick="return confirm('Are you sure you want to delete this expense?')">
+               Delete
+            </a>
+          </div>
+
+        </li>
+      {% empty %}
+        <li class="list-group-item">
+          No expense records yet.
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+</div>
+
+{% endblock %}

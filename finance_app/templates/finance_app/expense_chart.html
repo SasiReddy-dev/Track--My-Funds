@@ -1,0 +1,53 @@
+{% extends "finance_app/base.html" %}
+
+{% block content %}
+
+<h2 class="text-center">Expense Chart</h2>
+
+<!-- Buttons -->
+<div class="mb-3 text-center">
+  <a href="{% url 'expense_chart' %}?month={{ current_month }}&year={{ current_year }}" class="btn btn-primary">
+    This Month
+  </a>
+  <a href="{% url 'expense_chart' %}?year={{ current_year }}" class="btn btn-secondary">
+    This Year
+  </a>
+</div>
+
+<!-- Chart -->
+<div style="width:400px; margin:auto;">
+  <canvas id="expenseChart"></canvas>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const labels = {{ labels|safe }};
+  const data = {{ data|safe }};
+
+  console.log("Labels:", labels);
+  console.log("Data:", data);
+
+  if(labels.length === 0){
+    alert("No data available for this month!");
+  }
+
+  const ctx = document.getElementById('expenseChart').getContext('2d');
+
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Expenses',
+        data: data,
+        backgroundColor: [
+          '#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF','#FF9F40'
+        ]
+      }]
+    }
+  });
+</script>
+
+{% endblock %}
