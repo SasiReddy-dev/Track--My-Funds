@@ -17,22 +17,6 @@ Frontend: HTML, CSS, JavaScript
 Database: SQLite
 Version Control: Git & GitHub
 
-Track--My-Funds/
-│
-├── finance_app/          # Main application
-│   ├── models.py
-│   ├── views.py
-│   ├── urls.py
-│   ├── forms.py
-│   └── templates/
-│
-├── mobile_tracker/       # Django project settings
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-│
-├── manage.py
-└── README.md
 
 ⚙️ How to Run This Project
 Step 1: Clone the repository
